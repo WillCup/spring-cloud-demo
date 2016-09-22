@@ -8,6 +8,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.Resources;
@@ -25,6 +26,10 @@ import java.util.stream.Collectors;
 @EnableDiscoveryClient	// 启动后会向eureka server注册当前service
 @SpringBootApplication
 public class ReservationClientApplication {
+	@Bean
+	AlwaysSampler alwaysSampler() {
+		return new AlwaysSampler();
+	}
 
 	/**
 	 * 如果没有@LoadBalanced的话,restTemplate的调用会报错
